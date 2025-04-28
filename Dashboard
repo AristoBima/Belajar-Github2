@@ -1,0 +1,35 @@
+# dashboard.py
+
+import streamlit as st
+import pandas as pd
+
+# Judul halaman
+st.title("Gathering Data - Waktu Interaktif")
+
+# Load data
+df = pd.read_csv("PRSA_Data_Aotizhongxin_20130301-20170228.csv")
+
+# Pastikan kolom waktu berbentuk datetime
+df['date'] = pd.to_datetime(df['year'].astype(str) + '-' + df['month'].astype(str) + '-' + df['day'].astype(str) + ' ' + df['hour'].astype(str) + ':00')
+
+# Menentukan range waktu di slider
+min_date = df['date'].min()
+max_date = df['date'].max()
+
+# Membuat slider waktu
+selected_date = st.slider(
+    "Pilih rentang waktu:",
+    min_value=min_date,
+    max_value=max_date,
+    value=(min_date, max_date),
+    format="YYYY-MM-DD"
+)
+
+# Filter data berdasarkan waktu yang dipilih
+filtered_df = df[(df['date'] >= selected_date[0]) & (df['date'] <= selected_date[1])]
+
+# Tampilkan data yang sudah difilter
+st.dataframe(filtered_df)
+
+# Bisa juga menambahkan visualisasi sederhana (opsional)
+st.line_chart(filtered_df.set_index('date')['TEMP'])
