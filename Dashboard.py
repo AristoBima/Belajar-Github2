@@ -5,6 +5,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import datetime
+
 
 # Konfigurasi halaman
 st.set_page_config(page_title="Dashboard Kualitas Udara", layout="wide")
@@ -30,12 +32,11 @@ max_date = df_prsa['date'].max()
 
 selected_date = st.slider(
     "Pilih rentang waktu untuk PRSA Data:",
-    min_value=min_date,
-    max_value=max_date,
-    value=(min_date, max_date),
+    min_value=min_date.to_pydatetime(),
+    max_value=max_date.to_pydatetime(),
+    value=(min_date.to_pydatetime(), max_date.to_pydatetime()),
     format="YYYY-MM-DD"
 )
-
 # Filter berdasarkan tanggal
 filtered_prsa = df_prsa[(df_prsa['date'] >= selected_date[0]) & (df_prsa['date'] <= selected_date[1])]
 
