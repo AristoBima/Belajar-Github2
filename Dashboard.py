@@ -10,7 +10,7 @@ import seaborn as sns
 st.title("Gathering Data - Waktu Interaktif")
 
 # Load data
-df = pd.read_csv("dashboard/PRSA_Data_Aotizhongxin_20130301-20170228.csv")
+df = pd.read_csv("PRSA_Data_Aotizhongxin_20130301-20170228.csv")
 
 # Pastikan kolom waktu berbentuk datetime
 df['date'] = pd.to_datetime(df['year'].astype(str) + '-' + df['month'].astype(str) + '-' + df['day'].astype(str) + ' ' + df['hour'].astype(str) + ':00')
@@ -44,7 +44,7 @@ st.set_page_config(layout="wide")
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv("data/cleaned_air_quality.csv")
+    df = pd.read_csv("cleaned_air_quality.csv")
     df['datetime'] = pd.to_datetime(df['datetime'])
     df['date'] = df['datetime'].dt.date
     df['month'] = df['datetime'].dt.month
